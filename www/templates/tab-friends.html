@@ -1,0 +1,22 @@
+<ion-view title="Friends">
+  <ion-nav-buttons side="right">
+    <button ng-click="showAdd = true" class="button">
+    	A dedê
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+ 	<div ng-show="showAdd" class="item item-input-inset">
+   	  <label class="item-input-wrapper">
+   	  	<input value="" ng-model="form.tarefaNome" type="text" placeholder="Tarefa">
+   	  </label>
+   	  <button ng-click="addTarefa()" class="button button-small">
+   	  	A dedê
+   	  </button>
+   	</div>
+    <ion-list>
+      <ion-item ng-repeat="tarefa in tarefas" type="item-text-wrap" href="#/tab/friend/{{tarefa.id}}">
+        {{tarefa.name}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
