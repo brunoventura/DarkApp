@@ -6,6 +6,7 @@ angular.module('starter.services', ['ngCordova'])
 .factory('Tarefas', function($cordovaSQLite) {
   // Might use a resource here that returns a JSON array
   //var db = $cordovaSQLite.openDB({name : 'my.db'});
+  var db = new PouchDB('tarefas');
 
   // Some fake testing data
   var friends = [
@@ -24,6 +25,9 @@ angular.module('starter.services', ['ngCordova'])
   ];
 
   return {
+    allBase: function() {
+      return db.allDocs({include_docs: true});
+    },
     all: function() {
       return friends;
     },
@@ -32,10 +36,8 @@ angular.module('starter.services', ['ngCordova'])
       return friends[tarefaId];
     },
     put: function(tarefa) {
-      friends.push({
-        id: friends.length,
-        name: tarefa,
-        horas: 0 
+      db.post(angular.copy(tarefa), function(err, res) {
+        if (err) console.log(err);
       });
     }
   }

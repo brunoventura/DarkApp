@@ -1,19 +1,22 @@
 angular.module('starter.controllers', ['pickadate'])
 
 .controller('DashCtrl', function($scope, $ionicModal, Tarefas) {
-	$scope.tarefas = Tarefas.all();
+    $scope.tarefas = [];
 
-    $ionicModal.fromTemplateUrl('templates/datemodal.html', 
-        function(modal) {
-            $scope.datemodal = modal;
-        },
-        {
-        // Use our scope for the scope of the modal to keep it simple
-        scope: $scope, 
-        // The animation we want to use for the modal entrance
+    $ionicModal.fromTemplateUrl('templates/datemodal.html',
+      function(modal) {
+        $scope.datemodal = modal;
+      },
+      {
+        scope: $scope,
         animation: 'slide-in-up'
-        }
+      }
     );
+
+    Tarefas.allBase().then(function(res){
+      $scope.tarefas = $scope.tarefas.concat(res.rows);
+      $scope.$apply();
+    });
 
     $scope.opendateModal = function() {
       $scope.datemodal.show();
@@ -33,7 +36,11 @@ angular.module('starter.controllers', ['pickadate'])
 })
 
 .controller('FriendsCtrl', function($scope, Tarefas) {
-	$scope.tarefas = Tarefas.all();
+	//$scope.tarefas = Tarefas.all();
+    Tarefas.allBase().then(function(res){
+        $scope.tarefas = $scope.tarefas.concat(res.rows);
+        $scope.$apply();
+    });
 	$scope.form = {};
 
 	$scope.addTarefa = function(){
